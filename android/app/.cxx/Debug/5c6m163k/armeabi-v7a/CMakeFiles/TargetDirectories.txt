@@ -1,0 +1,2 @@
+C:/Users/ZBOOK/AndroidStudioProjects/Fairouz-User-App-master/android/app/.cxx/Debug/5c6m163k/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/ZBOOK/AndroidStudioProjects/Fairouz-User-App-master/android/app/.cxx/Debug/5c6m163k/armeabi-v7a/CMakeFiles/rebuild_cache.dir

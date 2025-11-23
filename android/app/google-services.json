@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "764594631643",
+    "project_id": "fairouzuser-f6436",
+    "storage_bucket": "fairouzuser-f6436.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764594631643:android:ade2d28c61185c55bcadfe",
+        "android_client_info": {
+          "package_name": "fairouz.store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ7JRaaRGr5mkzyGtwibh61JlE3HyBDGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
