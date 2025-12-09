@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bandora_app/model/all_order_model.dart' as model;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ import '../../utils/them.dart';
 import '../../view/screen/order_status_english.dart';
 import '../../view/screen/order_status_screen.dart';
 import 'cart_controller.dart';
+import 'details_order_controller.dart';
 
 class CheckOutController extends GetxController {
   final fromkey = GlobalKey<FormState>();
@@ -21,11 +23,13 @@ class CheckOutController extends GetxController {
   TextEditingController phone = TextEditingController();
   TextEditingController cobon = TextEditingController();
   CartController cartController = Get.put(CartController());
+  OrderDetailsController orderDetailsController =
+      Get.put(OrderDetailsController());
   var isLoading = true.obs;
   var isl = false.obs;
   RxList<Datum> checkOutPageList = <Datum>[].obs; //stream..
   String location = 'اختر عنوانك'.tr;
-  int location_id = 0 ;
+  int location_id = 0;
   TextEditingController looooc = TextEditingController();
 
   get storage => null;
@@ -54,7 +58,7 @@ class CheckOutController extends GetxController {
     print('Another Phone: ${anotherPhone.text}');
     print('Address: $location');
     print('Address ID: $location_id');
-    
+
     const storage = FlutterSecureStorage();
     String token = (await storage.read(key: 'token'))!;
     var request = await http.post(Uri.parse('$baseUrl/CheckOut'), body: {
@@ -66,16 +70,26 @@ class CheckOutController extends GetxController {
       'coupon': '',
     }, headers: {
       'Authorization': 'Bearer $token',
-      "Accept":'application/json'
+      "Accept": 'application/json'
     });
-    
-    print('Response Status Code: ${request.statusCode}');
+
+    print('Response Status Code: ${request.statusCode}\n$token');
     print('Response Body: ${request.body}');
-    
+
     // تحسين معالجة الـ status codes
-    if (request.statusCode == 200 || request.statusCode == 201 || request.statusCode == 202) {
+    if (request.statusCode == 200 ||
+        request.statusCode == 201 ||
+        request.statusCode == 202) {
       print('Success! Status code is ${request.statusCode}');
-      var data = jsonDecode(request.body);
+      Map<String, dynamic> dataJson = jsonDecode(request.body);
+      int newOrderCode = dataJson['data']['order'];
+
+      // تمرير رقم المستخدم مباشرةً لرسالة واتساب قبل جلب التفاصيل من الخادم
+      await orderDetailsController.sendWhatsAppForOrder(newOrderCode,
+          fromUserTap: true,
+          userPhoneOverride: phone.text.trim().isNotEmpty
+              ? phone.text.trim()
+              : anotherPhone.text.trim());
       Get.snackbar("تم التحويل بنجاح شكرا للك".tr, '',
           duration: const Duration(seconds: 1),
           backgroundColor: Colors.white,
@@ -93,7 +107,6 @@ class CheckOutController extends GetxController {
       location = 'اختر عنوانك';
       cobon.clear();
       cartController.clearCart();
-
       update();
     } else if (request.statusCode == 422) {
       // Validation error - قد يكون العنوان غير صحيح
@@ -141,7 +154,7 @@ class CheckOutController extends GetxController {
         print('CheckOut data is null - API returned empty data');
         // Optionally show a message to user
         Get.snackbar(
-          'لا توجد بيانات متاحة'.tr, 
+          'لا توجد بيانات متاحة'.tr,
           'يرجى المحاولة مرة أخرى لاحقاً'.tr,
           duration: const Duration(seconds: 2),
           backgroundColor: Colors.orange,
@@ -152,10 +165,10 @@ class CheckOutController extends GetxController {
     } catch (e) {
       print('Error in getCheckOutPage: $e');
       checkOutPageList.clear();
-      
+
       String errorMessage = 'يرجى التحقق من الاتصال والمحاولة مرة أخرى'.tr;
       Color backgroundColor = Colors.red;
-      
+
       if (e.toString().contains('Unauthorized')) {
         errorMessage = 'يرجى تسجيل الدخول مرة أخرى'.tr;
         backgroundColor = Colors.orange;
@@ -172,10 +185,10 @@ class CheckOutController extends GetxController {
         errorMessage = 'يرجى تسجيل الدخول مرة أخرى'.tr;
         backgroundColor = Colors.orange;
       }
-      
+
       // Show error message to user
       Get.snackbar(
-        'خطأ في تحميل البيانات'.tr, 
+        'خطأ في تحميل البيانات'.tr,
         errorMessage,
         duration: const Duration(seconds: 3),
         backgroundColor: backgroundColor,
@@ -225,5 +238,4 @@ class CheckOutController extends GetxController {
       return null;
     }
   }
-
 }

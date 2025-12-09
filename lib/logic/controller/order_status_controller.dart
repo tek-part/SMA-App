@@ -16,9 +16,9 @@ class OrderStatusController extends GetxController {
   String remaing = '';
   int type = 0;
   int id = 0;
-  List<SubCategories> order_notification = [] ;
+  List<SubCategories> order_notification = [];
 
-   var  driver = Rxn<Mrepresentatives>();
+  var driver = Rxn<Mrepresentatives>();
 
   @override
   void onInit() {
@@ -54,37 +54,29 @@ class OrderStatusController extends GetxController {
     }
   }
 
-
   show_Customer_rating(body) async {
     try {
       var products = await OrderStatusServices.post_rateing(body);
-      if (products.status == "success") {
-
-      }
+      if (products.status == "success") {}
       update();
     } catch (e) {
       isLoading(false);
       update();
     }
-
   }
 
   get_rating(id) async {
-
-
     try {
       var products = await OrderStatusServices.get_rate(id);
-      if (products !=null) {
-        driver.value = products ;
+      if (products != null) {
+        driver.value = products;
       }
       update();
     } catch (e) {
       isLoading(false);
       update();
     }
-
   }
-
 
   // get_order_notification(){
   //   orderStatusItemList.map((el){
@@ -120,8 +112,4 @@ class OrderStatusController extends GetxController {
   //   }
   //
   // }
-
-
-
-
 }

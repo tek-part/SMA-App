@@ -233,6 +233,31 @@ class OrderStatusEnglishScreen extends StatelessWidget {
                             },
                             colorstext: Colors.black,
                             background: mainColor),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: mainColor,
+                              foregroundColor: Colors.black,
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 14),
+                            ),
+                            onPressed: () => orderDetailsController
+                                .sendWhatsAppForOrder(item.id,
+                                    fromUserTap: true),
+                            icon: const Icon(Icons.message),
+                            label: const Text(
+                              'Send via WhatsApp',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Cairo',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
 
                         if (item.type == 4)
                           const SizedBox(

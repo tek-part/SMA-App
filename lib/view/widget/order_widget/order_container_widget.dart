@@ -55,25 +55,25 @@ Widget OrderContainerWidget({
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            //reload
-            InkWell(
-              onTap: reloadTap,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/images/reload.svg',
-                    // ignore: deprecated_member_use
-                    color: logoColor,
-                  ),
-                  TextUtils(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: textColor,
-                      text: 'إعادة الطلب'.tr),
-                ],
-              ),
-            ),
+            // //reload
+            // InkWell(
+            //   onTap: reloadTap,
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       SvgPicture.asset(
+            //         'assets/images/reload.svg',
+            //         // ignore: deprecated_member_use
+            //         color: logoColor,
+            //       ),
+            //       TextUtils(
+            //           fontSize: 14,
+            //           fontWeight: FontWeight.w600,
+            //           color: textColor,
+            //           text: 'إعادة الطلب'.tr),
+            //     ],
+            //   ),
+            // ),
 
             //statues
             textt,

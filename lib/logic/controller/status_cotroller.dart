@@ -4,7 +4,7 @@ import '../../services/main_catogery_services.dart';
 
 class StatusContrller extends GetxController {
   var isLoading = false.obs;
-@override
+  @override
   void onInit() {
     getStatus();
     super.onInit();
@@ -15,7 +15,6 @@ class StatusContrller extends GetxController {
   int remaining = 0;
 
   getStatus() async {
-    
     isLoading(true);
     var products = await StatusServices.getProduct();
 
@@ -34,5 +33,4 @@ class StatusContrller extends GetxController {
       update();
     }
   }
-
 }

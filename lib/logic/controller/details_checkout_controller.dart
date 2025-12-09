@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../model/details_checkout_model.dart';
+import '../../model/profile_data_model.dart';
 import '../../services/main_catogery_services.dart';
 
 class CheckOUtDetailsController extends GetxController {
@@ -10,11 +12,15 @@ class CheckOUtDetailsController extends GetxController {
   String total = '';
   String name = '';
   String description = '';
+  String customerName = '';
+  String customerPhone = '';
+  bool _whatsAppSent = false;
 
   var isLoading = true.obs;
   @override
   void onInit() {
     getProducrtDetails();
+    _loadProfileData();
     super.onInit();
   }
 
@@ -47,5 +53,73 @@ class CheckOUtDetailsController extends GetxController {
     costDelivery = 0;
     total = '';
     update();
+  }
+
+  Future<void> _loadProfileData() async {
+    try {
+      final profile = await ProfileDataServices.getData();
+      if (profile.data.isNotEmpty) {
+        final Datum user = profile.data.first;
+        customerName = '${user.firstName} ${user.lastName}'.trim();
+        customerPhone = user.phone;
+      }
+    } catch (_) {
+      // نحاول لاحقاً في حالة الفشل
+    }
+  }
+
+  String _buildWhatsAppMessage() {
+    if (checkOutDetailsList.isEmpty) {
+      return 'لا توجد منتجات في الطلب حالياً.';
+    }
+    final buffer = StringBuffer();
+    buffer.writeln('الأصناف:');
+    for (final item in checkOutDetailsList) {
+      final lineTotal = item.price * item.quantity;
+      buffer.writeln(
+          '- ${item.name} = { ${item.quantity} } => (${item.price} للوحدة)');
+    }
+    if (customerName.isNotEmpty) buffer.writeln('الاسم: $customerName');
+    if (customerPhone.isNotEmpty) buffer.writeln('الهاتف: $customerPhone');
+    if (first.isNotEmpty) buffer.writeln('الإجمالي: $first');
+    buffer.writeln('تكلفة التوصيل: $costDelivery');
+    if (total.isNotEmpty) buffer.writeln('الإجمالي الفرعي: $total');
+    return buffer.toString();
+  }
+
+  Future<void> openWhatsApp({bool fromUserTap = false}) async {
+    if (checkOutDetailsList.isEmpty) {
+      if (fromUserTap) {
+        Get.snackbar('لا توجد منتجات لإرسالها'.tr, '',
+            snackPosition: SnackPosition.BOTTOM);
+      }
+      return;
+    }
+    final message = _buildWhatsAppMessage();
+    const phone = '201094260793'; // بدون علامة +
+    final uri = Uri.parse('https://wa.me/$phone?text=${Uri.encodeComponent(message)}');
+
+    try {
+      final launched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched && fromUserTap) {
+        Get.snackbar('واتساب غير متوفر'.tr, '',
+            snackPosition: SnackPosition.BOTTOM);
+      }
+      _whatsAppSent = launched || _whatsAppSent;
+    } catch (_) {
+      if (fromUserTap) {
+        Get.snackbar('تعذر فتح واتساب'.tr, '',
+            snackPosition: SnackPosition.BOTTOM);
+      }
+    }
+  }
+
+  Future<void> triggerAutoWhatsApp() async {
+    if (_whatsAppSent) return;
+    if (isLoading.value || checkOutDetailsList.isEmpty) return;
+    await openWhatsApp();
   }
 }

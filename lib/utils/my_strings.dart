@@ -2,7 +2,7 @@ String validationEmail =
     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
 
 String validationName = r'^[a-z A-Z]+$';
-String baseUrl = 'https://fairouz.alwafierp.com/api';
+String baseUrl = 'https://sam.alwafierp.com/api';
 
 String arabic = 'العربية';
 String english = 'English';

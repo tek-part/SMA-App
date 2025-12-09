@@ -59,6 +59,9 @@ class AllOrderWidget extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: controller.orderItemList.length,
                     itemBuilder: (context, index) {
+                      print(
+                          "===============================${controller.orderItemList[index].id}");
+
                       if (controller.orderItemList[index].status == 'اكتمل' ||
                           controller.orderItemList[index].status ==
                               'Completed') {

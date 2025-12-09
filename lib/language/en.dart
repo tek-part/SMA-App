@@ -140,5 +140,6 @@ const Map<String, String> en = {
   "home_location": "Please specify your location",
   "aLarm_map": "ALarm",
   "Save_new_home": "Save the new home place.",
-  "evaluation":"evaluation"
+  "evaluation":"evaluation",
+  "إطلب و إرسال": "Order and send"
 };

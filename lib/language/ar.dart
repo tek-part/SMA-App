@@ -139,5 +139,6 @@ const Map<String, String> ar = {
   "home_location": "يرجي تحـد يـد موقعك",
   "aLarm_map": "تنبية",
   "Save_new_home": "حفظ المكان المنزل الجديد.",
-  "evaluation":"تقييم"
+  "evaluation":"تقييم",
+  "إطلب و إرسال": "إطلب و إرسال"
 };

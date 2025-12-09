@@ -23,7 +23,7 @@ import '../widget/text_utils.dart';
 
 // ignore: must_be_immutable
 class CheckScreen extends StatefulWidget {
-  CheckScreen({super.key});
+  const CheckScreen({super.key});
 
   @override
   State<CheckScreen> createState() => _CheckScreenState();
@@ -35,7 +35,7 @@ class _CheckScreenState extends State<CheckScreen> {
   OrderController orderController = Get.put(OrderController());
 
   OrderStatusController orderStatusController =
-  Get.put(OrderStatusController());
+      Get.put(OrderStatusController());
 
   SettingController settingController = Get.put(SettingController());
 
@@ -55,11 +55,10 @@ class _CheckScreenState extends State<CheckScreen> {
     if (locationController.locationItemList.isNotEmpty) {
       controller.location_id = locationController.locationItemList.first.id;
       controller.location =
-      '${locationController.locationItemList.first.city} , ${locationController
-          .locationItemList.first.street}';
+          '${locationController.locationItemList.first.city} , ${locationController.locationItemList.first.street}';
       setState(() {});
     }
-    
+
     // تأمين الوصول للقائمة
     if (controller.checkOutPageList.isNotEmpty) {
       controller.phone.text = controller.checkOutPageList[0].phone;
@@ -84,9 +83,14 @@ class _CheckScreenState extends State<CheckScreen> {
         ),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_sharp,color: Colors.black,), onPressed: () {
-          Navigator.pop(context);
-        },),
+          icon: const Icon(
+            Icons.arrow_back_sharp,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         centerTitle: true,
         backgroundColor: mainColor,
       ),
@@ -170,10 +174,7 @@ class _CheckScreenState extends State<CheckScreen> {
                     //cobon
                     SizedBox(
                         width: double.infinity,
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height / 15,
+                        height: MediaQuery.of(context).size.height / 15,
                         child: Stack(
                           children: [
                             CartTextFormField(
@@ -200,17 +201,6 @@ class _CheckScreenState extends State<CheckScreen> {
                             )
                           ],
                         )),
-                    //PayMent
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    //paument
-                    PayMentMetohodWidget(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    //ملخص الدفع
-                    SummeryPayMent(),
 
                     //buttons
                     const SizedBox(
@@ -219,51 +209,63 @@ class _CheckScreenState extends State<CheckScreen> {
 
                     //buttons
 
-                    Align(
-                      alignment: Alignment.center,
-                      child: InkWell(
-                        onTap: () {
-                          CheckOutDetailsServices.getProduct();
-                          Get.toNamed(Routes.checkOutDetailsScreen);
-                        },
-                        child: TextUtils(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: mainColor,
-                            text: 'مراجعة الطلب'.tr),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.center,
+                    //   child: InkWell(
+                    //     onTap: () {
+                    //       CheckOutDetailsServices.getProduct();
+                    //       Get.toNamed(Routes.checkOutDetailsScreen);
+                    //     },
+                    //     child: TextUtils(
+                    //         fontSize: 16,
+                    //         fontWeight: FontWeight.w600,
+                    //         color: mainColor,
+                    //         text: 'مراجعة الطلب'.tr),
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 20,
                     ),
                     Align(
                       alignment: Alignment.center,
                       child: ButtonUtils(
-                          text: 'إطلب'.tr,
+                          text: 'إطلب و إرسال'.tr,
                           onPressed: () async {
                             print('=== DEBUG START ===');
                             print('location: \'${controller.location}\'');
                             print('location_id: ${controller.location_id}');
-                            print('condition check: ${controller.location == 'اختر عنوانك'} || ${controller.location_id == 0}');
-                            
-                            if (controller.location == 'اختر عنوانك' || controller.location_id == 0) {
-                              print('Entering condition: location is default or location_id is 0');
+                            print(
+                                'condition check: ${controller.location == 'اختر عنوانك'} || ${controller.location_id == 0}');
+
+                            if (controller.location == 'اختر عنوانك' ||
+                                controller.location_id == 0) {
+                              print(
+                                  'Entering condition: location is default or location_id is 0');
                               // جلب العناوين أولاً
                               await locationController.getLocationItem();
-                              print('Location items count: ${locationController.locationItemList.length}');
-                              
+                              print(
+                                  'Location items count: ${locationController.locationItemList.length}');
+
                               // إذا كان هناك عناوين، اختر أول واحد تلقائياً
-                              if (locationController.locationItemList.isNotEmpty) {
+                              if (locationController
+                                  .locationItemList.isNotEmpty) {
                                 print('Selecting first location automatically');
-                                controller.location_id = locationController.locationItemList.first.id;
-                                controller.location = '${locationController.locationItemList.first.city} , ${locationController.locationItemList.first.street}';
+                                controller.location_id = locationController
+                                    .locationItemList.first.id;
+                                controller.location =
+                                    '${locationController.locationItemList.first.city} , ${locationController.locationItemList.first.street}';
                                 controller.update();
-                                print('Updated location_id: ${controller.location_id}');
-                                print('Updated location: ${controller.location}');
-                                
+                                print(
+                                    'Updated location_id: ${controller.location_id}');
+                                print(
+                                    'Updated location: ${controller.location}');
+
                                 // الآن ارفع الطلب مباشرة
                                 print('Calling checkOut...');
-                                controller.checkOut(controller.phone.text, context, settingController.langlocal == 'ar');
+                                controller.checkOut(
+                                    controller.phone.text,
+                                    context,
+                                    settingController.langlocal == 'ar');
                               } else {
                                 print('No locations found, showing dialog');
                                 // إذا لم تكن هناك عناوين، أظهر رسالة إضافة عنوان
@@ -271,13 +273,16 @@ class _CheckScreenState extends State<CheckScreen> {
                                   backgroundColor: Colors.white,
                                   title: '',
                                   titlePadding: const EdgeInsets.all(0),
-                                  titleStyle: const TextStyle(height: 0, letterSpacing: -0.30),
+                                  titleStyle: const TextStyle(
+                                      height: 0, letterSpacing: -0.30),
                                   middleText: 'الرجاء إضافة عنوان'.tr,
                                 );
                               }
                             } else {
-                              print('Location already selected, calling checkOut directly');
-                              controller.checkOut(controller.phone.text, context, settingController.langlocal == 'ar');
+                              print(
+                                  'Location already selected, calling checkOut directly');
+                              controller.checkOut(controller.phone.text,
+                                  context, settingController.langlocal == 'ar');
                             }
                             print('=== DEBUG END ===');
                           },

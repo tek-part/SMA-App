@@ -49,7 +49,7 @@ class OrderStatusScreen extends StatelessWidget {
                     context,
                     screen: MainScreen(),
                     withNavBar: true,
-                    settings: MaterialPage(child: HomeScreen()));
+                    settings: const MaterialPage(child: HomeScreen()));
               },
               child: const Icon(Icons.arrow_back, color: Colors.black)),
           elevation: 0,
@@ -75,6 +75,8 @@ class OrderStatusScreen extends StatelessWidget {
                 physics: const PageScrollPhysics(),
                 itemBuilder: (context, index) {
                   var item = controller.orderStatusItemList[index];
+                  print("===============================${item.id}");
+                  print("===============================${item.status}");
                   return Padding(
                     padding: const EdgeInsets.only(top: 5, bottom: 70),
                     child: Column(
@@ -266,6 +268,30 @@ class OrderStatusScreen extends StatelessWidget {
                             },
                             colorstext: Colors.black,
                             background: mainColor),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: mainColor,
+                              foregroundColor: Colors.black,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                            ),
+                            onPressed: () => orderDetailsController
+                                .sendWhatsAppForOrder(item.id,
+                                    fromUserTap: true),
+                            icon: const Icon(Icons.message),
+                            label: const Text(
+                              'إرسال عبر واتساب',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Cairo',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
                         if (item.type == 4)
                           const SizedBox(
                             height: 15,
@@ -306,8 +332,8 @@ class OrderStatusScreen extends StatelessWidget {
                                     .pushNewScreenWithRouteSettings(context,
                                         screen: MainScreen(),
                                         withNavBar: false,
-                                        settings:
-                                            MaterialPage(child: HomeScreen()));
+                                        settings: const MaterialPage(
+                                            child: HomeScreen()));
                               },
                               colorstext: mainColor,
                               background: Colors.white),

@@ -28,6 +28,7 @@ class ButtonUtils extends StatelessWidget {
           onPressed: onPressed,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
             children: [
               if (text == 'إضافة إلي السلة'.tr)
                 Icon(
@@ -35,17 +36,22 @@ class ButtonUtils extends StatelessWidget {
                   color: Colors.black,
                   size: 22,
                 ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                text,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: colorstext,
-                  fontSize: 16,
-                  fontFamily: 'Cairo',
-                  fontWeight: FontWeight.w500,
+              if (text == 'إضافة إلي السلة'.tr)
+                const SizedBox(
+                  width: 10,
+                ),
+              Expanded(
+                child: Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: colorstext,
+                    fontSize: 16,
+                    fontFamily: 'Cairo',
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],

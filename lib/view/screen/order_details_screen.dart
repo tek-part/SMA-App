@@ -6,7 +6,6 @@ import '../../logic/controller/product_details_controller.dart';
 import '../../utils/them.dart';
 import '../widget/cart/cart_order_cart.dart';
 // import '../widget/cart/prices_widget.dart';
-import '../widget/text_utils.dart';
 
 // ignore: must_be_immutable
 class OrderDetailsScreen extends StatelessWidget {
@@ -86,75 +85,30 @@ class OrderDetailsScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  //cart
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.symmetric(horizontal: 15),
-                    // height: 164,
-                    decoration: ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                            width: 0.50, color: Color(0xFFCED5E1)),
-                        borderRadius: BorderRadius.circular(8),
+                  const SizedBox.shrink(),
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: mainColor,
+                          foregroundColor: Colors.black,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
+                        onPressed: () => controller.sendWhatsAppForLastOrder(
+                            fromUserTap: true),
+                        icon: const Icon(Icons.message),
+                        label: Text(
+                          'إرسال عبر واتساب'.tr,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Cairo',
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
-                      shadows: const [
-                        BoxShadow(
-                          color: Color(0x7FCED5E1),
-                          blurRadius: 3,
-                          offset: Offset(0, 1),
-                          spreadRadius: 0,
-                        )
-                      ],
                     ),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: TextUtils(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                                text: 'ملخص الدفع'.tr),
-                          ),
-                          //الدفعات
-                          // PricesWidget(
-                          //   textColor: Colors.black,
-                          //   priceColor: Colors.black,
-                          //   text: 'المجموع الأولي'.tr,
-                          //   price: '${controller.first} د.ع',
-                          // ),
-                          // const SizedBox(
-                          //   height: 7,
-                          // ),
-                          // const Divider(color: Colors.black, height: 1),
-                          // const SizedBox(
-                          //   height: 7,
-                          // ),
-                          // PricesWidget(
-                          //   textColor: Colors.black,
-                          //   priceColor: Colors.black,
-                          //   text: 'تكلفة التوصيل'.tr,
-                          //   price: '${controller.costDelivery} د.ع',
-                          // ),
-                          // const SizedBox(
-                          //   height: 7,
-                          // ),
-                          // const Divider(color: Colors.black, height: 1),
-                          // const SizedBox(
-                          //   height: 7,
-                          // ),
-                          // PricesWidget(
-                          //   textColor: Colors.black,
-                          //   priceColor: Colors.black,
-                          //   text: 'المجموع النهائي النقدي'.tr,
-                          //   price: '${controller.total} د.ع',
-                          // ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                        ]),
                   ),
                 ]);
               }
