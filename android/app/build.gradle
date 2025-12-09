@@ -3,6 +3,7 @@ plugins {
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
     id "com.google.gms.google-services"
+    id 'com.google.firebase.crashlytics'
 }
 
 // تحميل بيانات التوقيع من key.properties إذا وُجد
@@ -13,12 +14,12 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "fairouz.store"
+    namespace "com.sma.delivery"
     compileSdk 36
     ndkVersion = "27.0.12077973"
 
     defaultConfig {
-        applicationId "fairouz.store"
+        applicationId "com.sma.delivery"
         minSdkVersion flutter.minSdkVersion
         targetSdk 36
         versionCode 1

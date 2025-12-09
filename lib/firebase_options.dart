@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAZ7JRaaRGr5mkzyGtwibh61JlE3HyBDGk',
-    appId: '1:764594631643:android:ade2d28c61185c55bcadfe',
-    messagingSenderId: '764594631643',
-    projectId: 'fairouzuser-f6436',
-    storageBucket: 'fairouzuser-f6436.firebasestorage.app',
+    apiKey: 'AIzaSyDXnreE1RqbLzgKMoC1E4N1WYL7vqhgNxE',
+    appId: '1:1022341142238:android:4c62a28c55a9ecae29d44f',
+    messagingSenderId: '1022341142238',
+    projectId: 'sma-wafy',
+    storageBucket: 'sma-wafy.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA2wajyqloVRvHCveGfe_SbSkTPCbBncAU',
-    appId: '1:764594631643:ios:26371554004560e8bcadfe',
-    messagingSenderId: '764594631643',
-    projectId: 'fairouzuser-f6436',
-    storageBucket: 'fairouzuser-f6436.firebasestorage.app',
+    apiKey: 'AIzaSyALTD33jsXdM0zJyAVnKn59A3-0ZsbV9zw',
+    appId: '1:1022341142238:ios:8bb2359e0afe520a29d44f',
+    messagingSenderId: '1022341142238',
+    projectId: 'sma-wafy',
+    storageBucket: 'sma-wafy.firebasestorage.app',
     iosBundleId: 'com.fairouz',
   );
 

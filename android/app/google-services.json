@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "764594631643",
-    "project_id": "fairouzuser-f6436",
-    "storage_bucket": "fairouzuser-f6436.firebasestorage.app"
+    "project_number": "1022341142238",
+    "project_id": "sma-wafy",
+    "storage_bucket": "sma-wafy.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:764594631643:android:ade2d28c61185c55bcadfe",
+        "mobilesdk_app_id": "1:1022341142238:android:4c62a28c55a9ecae29d44f",
         "android_client_info": {
-          "package_name": "fairouz.store"
+          "package_name": "com.sma.delivery"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAZ7JRaaRGr5mkzyGtwibh61JlE3HyBDGk"
+          "current_key": "AIzaSyDXnreE1RqbLzgKMoC1E4N1WYL7vqhgNxE"
         }
       ],
       "services": {
