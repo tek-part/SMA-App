@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
             fit: BoxFit.contain,
             color: Colors.black,
           ),
-          leading: Center(
+          /*    leading: Center(
             child: InkWell(
               onTap: () {
                 PersistentNavBarNavigator.pushNewScreen(
@@ -156,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+    */
           actions: [
             BlocProvider(
               create: (_) => di.getIt<NotificationsCubit>(),
@@ -340,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           fontSize: 10,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.black,
-                                          text: 'فقط عند SAM\n'.tr +
+                                          text: 'فقط عند SMA\n'.tr +
                                               controller.productNum.toString() +
                                               ' منتج'.tr),
                                     ),

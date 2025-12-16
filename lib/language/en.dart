@@ -34,7 +34,7 @@ const Map<String, String> en = {
   'تفاصيل المنتج': 'Product Details',
   'إضافة إلي السلة': 'Add to cart',
   'المنتجات': 'Products',
-  'فقط عند فيروز': 'Only at SAM',
+  'فقط عند فيروز': 'Only at SMA',
   'العروض الأسبوعية': 'Weekly Offers',
   'إطلب': 'Order',
   'مراجعة الطلب': 'Review request',
@@ -141,5 +141,12 @@ const Map<String, String> en = {
   "aLarm_map": "ALarm",
   "Save_new_home": "Save the new home place.",
   "evaluation":"evaluation",
-  "إطلب و إرسال": "Order and send"
+  "إطلب و إرسال": "Order and send",
+  'مرحباً بك': 'Welcome',
+  'سجل دخولك للاستمرار': 'Log in to continue',
+  'ليس لديك حساب؟': "Don't have an account?",
+  'سجل الآن': 'Sign up now',
+  'أنشئ حسابك': 'Create your account',
+  'املأ التفاصيل أدناه للبدء': 'Fill in the details below to get started',
+  'لديك حساب بالفعل؟': 'Already have an account?'
 };

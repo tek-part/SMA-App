@@ -1,6 +1,3 @@
-import 'package:bandora_app/view/widget/Auth/auth_button.dart';
-import 'package:bandora_app/view/widget/Auth/auth_text_form_field.dart';
-import 'package:bandora_app/view/widget/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -20,219 +17,509 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // // AuthControllerIMP  authControllerIMP = Get.put(AuthControllerIMP());
-    // SignUpControllerImp authControllerIMP = Get.put(SignUpControllerImp());
-    // signupController signupcontroller = Get.put(signupController());
-    // TextEditingController phonecontroller = TextEditingController();
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'إنشاء حساب'.tr,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 22,
-              fontFamily: 'Cairo',
-              fontWeight: FontWeight.w500,
-              height: 0,
-              letterSpacing: -0.30,
-            ),
-          ),
-          leading: const Text(''),
-          elevation: 0,
-          centerTitle: true,
-          backgroundColor: mainColor,
-        ),
-        body: SingleChildScrollView(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding:
-                EdgeInsetsDirectional.only(top: 68.h, start: 20.w, end: 20.w),
-            child: SizedBox(
-              width: double.infinity,
-              height: 450.h,
-              child: Form(
-                key: controller.fromkey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextUtils(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: GreyClr,
-                        text: 'أدخل تفاصيل الحساب أدناه'.tr),
-                    //User name
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        //first Name
-                        SizedBox(
-                          width: 160.w,
-                          child: AuthTextFormField(
-                              onsave: (v) {
-                                controller.firstName.text = v!;
-                              },
-                              textInputType: TextInputType.name,
-                              controller: controller.firstName,
-                              obscureText: false,
-                              validator: (value) {
-                                if (value.toString().length <= 2) {
-                                  return 'Enter Valid Name';
-                                } else {
-                                  return null;
-                                }
-                              },
-                              hintText: 'الإسم الأول'.tr),
-                        ),
-                        //second name
-                        SizedBox(
-                          width: 160.w,
-                          child: AuthTextFormField(
-                              onsave: (v) {
-                                controller.secondName.text = v!;
-                              },
-                              textInputType: TextInputType.name,
-                              controller: controller.secondName,
-                              obscureText: false,
-                              validator: (value) {
-                                if (value.toString().length <= 2) {
-                                  return 'Enter Valid Name';
-                                } else {
-                                  return null;
-                                }
-                              },
-                              hintText: 'إسم العائلة'.tr),
-                        )
-                      ],
-                    ),
+            padding: EdgeInsetsDirectional.symmetric(
+                horizontal: 24.w, vertical: 32.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // App Logo
+                SizedBox(height: 20.h),
+                Image.asset(
+                  'assets/images/sme_logo.png',
+                  width: 120.w,
+                  height: 120.w,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(height: 32.h),
 
-                    //phone number
-                    SizedBox(
-                      width: double.infinity,
-                      // color: Colors.green,
-                      child: Row(children: [
-                        //الكود
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.h, vertical: 10.h),
-                            decoration: ShapeDecoration(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                side: const BorderSide(
-                                  width: 1,
-                                  color: GreyClr,
+                // Header Section
+                Text(
+                  'أنشئ حسابك'.tr,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 32.sp,
+                    fontFamily: 'Cairo',
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                    height: 1.2,
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  'املأ التفاصيل أدناه للبدء'.tr,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontFamily: 'Cairo',
+                    fontWeight: FontWeight.w400,
+                    color: GreyClr,
+                    height: 1.4,
+                  ),
+                ),
+                SizedBox(height: 48.h),
+
+                // Form Section
+                Form(
+                  key: controller.fromkey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Name Fields
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // First Name
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'الإسم الأول'.tr,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontFamily: 'Cairo',
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
                                 ),
+                                SizedBox(height: 12.h),
+                                Container(
+                                  height: 56.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.05),
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: TextFormField(
+                                    style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 16.sp,
+                                      fontFamily: 'Cairo',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    controller: controller.firstName,
+                                    keyboardType: TextInputType.name,
+                                    validator: (value) {
+                                      if (value.toString().length <= 2) {
+                                        return 'Enter Valid Name';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    onSaved: (v) {
+                                      controller.firstName.text = v!;
+                                    },
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16.w, vertical: 0),
+                                      hintText: 'الإسم الأول'.tr,
+                                      hintStyle: TextStyle(
+                                        color: GreyClr.withOpacity(0.6),
+                                        fontSize: 16.sp,
+                                        fontFamily: 'Cairo',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: GreyClr.withOpacity(0.3),
+                                          width: 1.5,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: mainColor,
+                                          width: 2,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.red,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.red,
+                                          width: 2,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          // Last Name
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'إسم العائلة'.tr,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontFamily: 'Cairo',
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                SizedBox(height: 12.h),
+                                Container(
+                                  height: 56.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.05),
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: TextFormField(
+                                    style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 16.sp,
+                                      fontFamily: 'Cairo',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    controller: controller.secondName,
+                                    keyboardType: TextInputType.name,
+                                    validator: (value) {
+                                      if (value.toString().length <= 2) {
+                                        return 'Enter Valid Name';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    onSaved: (v) {
+                                      controller.secondName.text = v!;
+                                    },
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16.w, vertical: 0),
+                                      hintText: 'إسم العائلة'.tr,
+                                      hintStyle: TextStyle(
+                                        color: GreyClr.withOpacity(0.6),
+                                        fontSize: 16.sp,
+                                        fontFamily: 'Cairo',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: GreyClr.withOpacity(0.3),
+                                          width: 1.5,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: mainColor,
+                                          width: 2,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.red,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.red,
+                                          width: 2,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 24.h),
+
+                      // Phone Number Section
+                      Text(
+                        'رقم الهاتف'.tr,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontFamily: 'Cairo',
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      SizedBox(height: 12.h),
+                      //phone number - Improved Design
+                      Container(
+                        height: 56.h,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(
+                            color: GreyClr.withOpacity(0.3),
+                            width: 1.5,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.05),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            //الكود - Country Code
+                            Container(
+                              width: 90.w,
+                              height: 56.h,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade50,
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(4.r),
-                                    bottomRight: Radius.circular(4.r)),
+                                  topRight: Radius.circular(12.r),
+                                  bottomRight: Radius.circular(12.r),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '+964',
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontFamily: 'Cairo',
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
+                                ),
                               ),
                             ),
-                            child: Center(
-                                child: TextUtils(
-                                    fontSize: 8.sp,
+                            // Divider
+                            Container(
+                              width: 1,
+                              height: 32.h,
+                              color: GreyClr.withOpacity(0.2),
+                            ),
+                            //number - Phone Number Field
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                child: TextFormField(
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 16.sp,
+                                    fontFamily: 'Cairo',
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                    text: '+964')),
-                          ),
+                                  ),
+                                  controller: controller.phone,
+                                  keyboardType: TextInputType.phone,
+                                  validator: (value) {
+                                    return controller
+                                        .validatePhone(value ?? '');
+                                  },
+                                  onSaved: (v) {
+                                    controller.phone.text = v!;
+                                  },
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.zero,
+                                    isDense: true,
+                                    hintText: '7XX XXX XXXX'.tr,
+                                    hintStyle: TextStyle(
+                                      color: GreyClr.withOpacity(0.6),
+                                      fontSize: 16.sp,
+                                      fontFamily: 'Cairo',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    border: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    focusedErrorBorder: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: 3.w,
-                        ),
-                        //number
-                        Expanded(
-                          flex: 5,
-                          child: AuthTextFormField(
-                              onsave: (v) {
-                                controller.phone.text = v!;
-                              },
-                              textInputType: TextInputType.phone,
-                              controller: controller.phone,
-                              obscureText: false,
-                              validator: (value) {
-                                controller.validatePhone(value);
-                              },
-                              hintText: '7XX XXX XXXX'.tr),
-                        )
-                      ]),
-                    ),
-                    //auth button
-                    GetBuilder<SignupController>(
-                      builder: (_) {
-                        return Align(
-                          alignment: AlignmentDirectional.center,
-                          child: AuthButton(
-                              text: 'التالي'.tr,
-                              onPressed: () {
-                                // controller.signUp();
-                                controller.signupBotton();
-                                phonenumber = controller.phone.text;
-                                controller.phonenumber.value = phonenumber;
-                              },
-                              colorstext: Colors.black,
-                              background: mainColor),
-                        );
-                      },
-                    ),
+                      ),
+                      SizedBox(height: 40.h),
 
-                    //او
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Expanded(
+                      //auth button
+                      GetBuilder<SignupController>(
+                        builder: (_) {
+                          return Container(
+                            width: double.infinity,
+                            height: 56.h,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [mainColor, mainColor.withOpacity(0.8)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(16.r),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: mainColor.withOpacity(0.3),
+                                  blurRadius: 16,
+                                  offset: const Offset(0, 8),
+                                ),
+                              ],
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  if (controller.fromkey.currentState!
+                                      .validate()) {
+                                    controller.signupBotton();
+                                    phonenumber = controller.phone.text;
+                                    controller.phonenumber.value = phonenumber;
+                                  }
+                                },
+                                borderRadius: BorderRadius.circular(16.r),
+                                child: Center(
+                                  child: Text(
+                                    'التالي'.tr,
+                                    style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 18.sp,
+                                      fontFamily: 'Cairo',
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 24.h),
+
+                      // Divider
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
                             child: Divider(
-                          color: Colors.black,
-                        )),
-                        Text(
-                          ' أو '.tr,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontFamily: 'Tajawal',
-                            fontWeight: FontWeight.w500,
+                              color: GreyClr.withOpacity(0.3),
+                              thickness: 1,
+                            ),
                           ),
-                        ),
-                        const Expanded(
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: Text(
+                              'أو'.tr,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontFamily: 'Cairo',
+                                fontWeight: FontWeight.w500,
+                                color: GreyClr,
+                              ),
+                            ),
+                          ),
+                          Expanded(
                             child: Divider(
-                          color: Colors.black,
-                        )),
-                      ],
-                    ),
-                    GetBuilder<SignupController>(
-                      builder: (_) {
-                        return Align(
-                          alignment: AlignmentDirectional.center,
-                          child: TextButton(
+                              color: GreyClr.withOpacity(0.3),
+                              thickness: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 24.h),
+
+                      // Continue as Guest
+                      GetBuilder<SignupController>(
+                        builder: (_) {
+                          return Center(
+                            child: TextButton(
                               onPressed: () {
                                 authBox.write('auth', false);
                                 Get.offNamed(Routes.mainScreen);
                               },
-                              child: TextUtils(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                  text: 'متابعة كضيف'.tr)),
-                        );
-                      },
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional.center,
-                      child: TextButton(
-                          onPressed: () {
-                            Get.toNamed(Routes.signInScreen);
-                          },
-                          child: TextUtils(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              text: 'تسجيل الدخول'.tr)),
-                    ),
-                  ],
+                              child: Text(
+                                'متابعة كضيف'.tr,
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontFamily: 'Cairo',
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 16.h),
+
+                      // Sign in link
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'لديك حساب بالفعل؟'.tr,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontFamily: 'Cairo',
+                              fontWeight: FontWeight.w400,
+                              color: GreyClr,
+                            ),
+                          ),
+                          SizedBox(width: 4.w),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed(Routes.signInScreen);
+                            },
+                            child: Text(
+                              'تسجيل الدخول'.tr,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontFamily: 'Cairo',
+                                fontWeight: FontWeight.bold,
+                                color: mainColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
