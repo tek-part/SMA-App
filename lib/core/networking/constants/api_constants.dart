@@ -1,5 +1,5 @@
 class ApiConstants {
-  static const String baserUrl = "https://sam.alwafierp.com/api";
+  static const String baserUrl = "https://sma.alwafierp.com/api";
   static const String notifications = "/Notification";
   static const String markRead = "/Notification/markAllAsRead";
   static const String unreadCount = "/Notification/unreadCount";

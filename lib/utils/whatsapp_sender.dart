@@ -40,9 +40,39 @@ class WhatsAppOrderSender {
     return buffer.toString();
   }
 
+  /// يستخرج رقم الهاتف من رابط واتساب
+  static String? extractPhoneFromWhatsAppLink(String? link) {
+    if (link == null || link.isEmpty) return null;
+    
+    // إذا كان الرابط يحتوي على wa.me أو رقم مباشر
+    if (link.contains('wa.me/')) {
+      final match = RegExp(r'wa\.me/(\d+)').firstMatch(link);
+      if (match != null) {
+        return match.group(1);
+      }
+    }
+    
+    // إذا كان الرابط يحتوي على رقم فقط
+    final phoneMatch = RegExp(r'(\d+)').firstMatch(link);
+    if (phoneMatch != null) {
+      return phoneMatch.group(1);
+    }
+    
+    return null;
+  }
+
   /// يفتح واتساب عبر wa.me ويعيد true عند النجاح.
-  static Future<bool> openWhatsApp(String message) async {
-    const phone = '201094260793';
+  /// يتطلب رابط واتساب من API، وإذا لم يكن متوفراً يعيد false
+  static Future<bool> openWhatsApp(String message, String? whatsappLink) async {
+    if (whatsappLink == null || whatsappLink.isEmpty) {
+      return false;
+    }
+
+    final phone = extractPhoneFromWhatsAppLink(whatsappLink);
+    if (phone == null || phone.isEmpty) {
+      return false;
+    }
+
     final uri =
         Uri.parse('https://wa.me/$phone?text=${Uri.encodeComponent(message)}');
     try {

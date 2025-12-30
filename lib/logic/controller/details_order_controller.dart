@@ -16,6 +16,7 @@ class OrderDetailsController extends GetxController {
   String userPhone = '';
   late address addres;
   int? lastOrderId;
+  String? whatsappLink;
 
   var isLoading = true.obs;
 
@@ -127,6 +128,42 @@ class OrderDetailsController extends GetxController {
     await _sendCurrentOrderToWhatsApp(fromUserTap: fromUserTap);
   }
 
+  Future<void> _getWhatsAppLink() async {
+    if (whatsappLink != null && whatsappLink!.isNotEmpty) {
+      return; // الرابط موجود بالفعل
+    }
+    
+    try {
+      var products = await ContactWitUsServices.getProduct();
+      if (products.status == "success" && products.data.whatsappLink.isNotEmpty) {
+        whatsappLink = products.data.whatsappLink;
+      }
+    } catch (e) {
+      print('Error fetching WhatsApp link: $e');
+      whatsappLink = null;
+    }
+  }
+
+  String? _extractPhoneFromWhatsAppLink(String? link) {
+    if (link == null || link.isEmpty) return null;
+    
+    // إذا كان الرابط يحتوي على wa.me أو رقم مباشر
+    if (link.contains('wa.me/')) {
+      final match = RegExp(r'wa\.me/(\d+)').firstMatch(link);
+      if (match != null) {
+        return match.group(1);
+      }
+    }
+    
+    // إذا كان الرابط يحتوي على رقم فقط
+    final phoneMatch = RegExp(r'(\d+)').firstMatch(link);
+    if (phoneMatch != null) {
+      return phoneMatch.group(1);
+    }
+    
+    return null;
+  }
+
   Future<void> _sendCurrentOrderToWhatsApp({bool fromUserTap = false}) async {
     if (orderDetailsList.isEmpty) {
       if (fromUserTap) {
@@ -136,8 +173,29 @@ class OrderDetailsController extends GetxController {
       return;
     }
 
+    // جلب رابط واتساب من API
+    await _getWhatsAppLink();
+    
+    // التحقق من وجود رابط واتساب
+    if (whatsappLink == null || whatsappLink!.isEmpty) {
+      if (fromUserTap) {
+        Get.snackbar('رابط واتساب غير متوفر'.tr, '',
+            snackPosition: SnackPosition.BOTTOM);
+      }
+      return;
+    }
+
     final message = _buildWhatsAppMessage();
-    const phone = '201094260793';
+    final phone = _extractPhoneFromWhatsAppLink(whatsappLink);
+    
+    if (phone == null || phone.isEmpty) {
+      if (fromUserTap) {
+        Get.snackbar('رابط واتساب غير صحيح'.tr, '',
+            snackPosition: SnackPosition.BOTTOM);
+      }
+      return;
+    }
+
     final uri =
         Uri.parse('https://wa.me/$phone?text=${Uri.encodeComponent(message)}');
 
