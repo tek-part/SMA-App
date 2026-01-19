@@ -61,12 +61,11 @@ class StatusWidget extends StatelessWidget {
                   color: GreyClr,
                   text: 'يفتح فى خلال'.tr),
               SlideCountdownSeparated(
-                textStyle: const TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontSize: 18,
                     fontWeight: FontWeight.w500),
-                height: 40,
-                width: 40,
+             
                 decoration: const BoxDecoration(
                     color: Color(0xFFF1F3FB),
                     borderRadius: BorderRadius.all(Radius.circular(2))),

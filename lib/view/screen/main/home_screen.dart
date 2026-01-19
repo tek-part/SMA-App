@@ -261,12 +261,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: UpgradeAlert(
           upgrader: Upgrader(
-            showIgnore: false,
-            showLater: false,
             languageCode: 'ar',
             messages: UpgraderMessages(code: 'ar'),
-            countryCode: 'EG',
-            dialogStyle: UpgradeDialogStyle.cupertino,
+            countryCode: 'EG', 
           ),
           child: RefreshIndicator(
             onRefresh: () {
@@ -374,9 +371,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 // Get.toNamed(Routes.OfferProductScreen);
                               },
                               child: DottedBorder(
-                                radius: const Radius.circular(4),
-                                borderType: BorderType.RRect,
-                                color: mainColor,
+                                options: RectDottedBorderOptions(
+                                  color: mainColor,
+                                  dashPattern: [10, 10],
+                                ),
                                 child: Container(
                                   width: 156.w,
                                   height: 61.h,

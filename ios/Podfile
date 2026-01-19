@@ -1,9 +1,9 @@
-# Uncomment this line to define a global platform for your project
-platform :ios, '14.0'
+platform :ios, '15.0'
 
-# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
-source 'https://github.com/CocoaPods/Specs.git'
+
+# ✅ CDN فقط (بدون Git)
+source 'https://cdn.cocoapods.org/'
 
 project 'Runner', {
   'Debug' => :debug,
@@ -12,27 +12,35 @@ project 'Runner', {
 }
 
 def flutter_root
-  generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
-  unless File.exist?(generated_xcode_build_settings_path)
-    raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure flutter pub get is executed first"
-  end
+  generated_xcode_build_settings_path = File.expand_path(
+    File.join('..', 'Flutter', 'Generated.xcconfig'),
+    __FILE__
+  )
+  raise "#{generated_xcode_build_settings_path} must exist" unless File.exist?(generated_xcode_build_settings_path)
 
   File.foreach(generated_xcode_build_settings_path) do |line|
     matches = line.match(/FLUTTER_ROOT\=(.*)/)
     return matches[1].strip if matches
   end
-  raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
 end
 
-require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+require File.expand_path(
+  File.join('packages', 'flutter_tools', 'bin', 'podhelper'),
+  flutter_root
+)
 
 flutter_ios_podfile_setup
 
 target 'Runner' do
-  use_frameworks!
-  use_modular_headers!
+  use_frameworks! :linkage => :static
+
+  # ✅ REQUIRED for Firebase Swift pods
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'nanopb', :modular_headers => true
+  pod 'GoogleDataTransport', :modular_headers => true
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
   target 'RunnerTests' do
     inherit! :search_paths
   end
@@ -41,16 +49,27 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-  end
- ################  Awesome Notifications pod modification  ###################
-  awesome_pod_file = File.expand_path(File.join('plugins', 'awesome_notifications', 'ios', 'Scripts', 'AwesomePodFile'), '.symlinks')
-  require awesome_pod_file
-  update_awesome_pod_build_settings(installer)
-  ################  Awesome Notifications pod modification  ###################
-end
 
-################  Awesome Notifications pod modification  ###################
-awesome_pod_file = File.expand_path(File.join('plugins', 'awesome_notifications', 'ios', 'Scripts', 'AwesomePodFile'), '.symlinks')
-require awesome_pod_file
-update_awesome_main_target_settings('Runner', File.dirname(File.realpath(__FILE__)), flutter_root)
-################  Awesome Notifications pod modification  ###################
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+
+      # Apple Silicon simulator fix
+      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'x86_64'
+
+      # 🔥 CRITICAL: Fix gRPC + Xcode 26
+      config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'gnu++17'
+      config.build_settings['CLANG_CXX_LIBRARY'] = 'libc++'
+    end
+
+    # 🔥 Remove invalid flags from gRPC / BoringSSL
+    if target.name.include?('gRPC') || target.name.include?('BoringSSL')
+      target.source_build_phase.files.each do |file|
+        if file.settings&.dig('COMPILER_FLAGS')
+          flags = file.settings['COMPILER_FLAGS']
+          flags = flags.split.reject { |f| f == '-G' || f == '-std=c++20' }.join(' ')
+          file.settings['COMPILER_FLAGS'] = flags
+        end
+      end
+    end
+  end
+end

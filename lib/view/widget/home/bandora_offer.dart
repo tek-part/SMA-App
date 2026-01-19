@@ -89,9 +89,10 @@ class BandoraOffer extends StatelessWidget {
               // Get.toNamed(Routes.OfferProductScreen);
             },
             child: DottedBorder(
-              radius: const Radius.circular(4),
-              borderType: BorderType.RRect,
-              color: mainColor,
+              options: RectDottedBorderOptions(
+                color: mainColor,
+                dashPattern: [10, 10],
+              ),
               child: Container(
                 width: MediaQuery.of(context).size.width / 2.4,
                 height: MediaQuery.of(context).size.height / 13.4,
